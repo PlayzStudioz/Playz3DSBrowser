@@ -18,38 +18,15 @@ AccessControlInfo:
   CoreVersion                      : 2
   IdealProcessor                   : 0
   AffinityMask                     : 1
-
-  Old3DSSystemMode                 : Prod
-  New3DSSystemMode                 : Legacy
-  New3DSCpuSpeed                   : Legacy
-  EnableL2Cache                    : false
-
   MemoryType                       : Application
-  SystemModeExt                    : Legacy
 
   IoAccessControl:
    - mcuhwc
    - ptmsysm
 
   FileSystemAccess:
-    - CategorySystemApplication
-    - CategoryHardwareCheck
-    - CategoryFileSystemTool
-    - Debug
     - DirectSdmc
-    - Core
-    - CtrNandRo
-    - CtrNandRw
-    - CtrNandRoWrite
-    - CategorySystemSettings
-    - CardBoard
-    - ExportImportIvs
     - DirectSdmcWrite
-    - SwitchCleanup
-    - SaveDataMove
-    - Shop
-    - Shell
-    - CategoryHomeMenu
 
   Permission:
     Category:
@@ -59,7 +36,7 @@ AccessControlInfo:
      - HomeMenu
 
 SystemControlInfo:
-  SaveDataSize: 0KB # no extdata used
+  SaveDataSize: 0KB
   RemasterVersion: 0
   StackSize: 0x40000
   ServiceAccessControl:
