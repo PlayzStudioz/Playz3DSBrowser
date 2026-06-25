@@ -15,25 +15,10 @@ Option:
   EnableCompress          : true
 
 AccessControlInfo:
-  CoreVersion                      : 2
-  IdealProcessor                   : 0
-  AffinityMask                     : 1
-  MemoryType                       : Application
-
-  IoAccessControl:
-   - mcuhwc
-   - ptmsysm
-
-  FileSystemAccess:
-    - DirectSdmc
-    - DirectSdmcWrite
-
-  Permission:
-    Category:
-     - Network
-     - SoftwareKeyboard
-     - Graphics
-     - HomeMenu
+  CoreVersion             : 2
+  IdealProcessor          : 0
+  AffinityMask            : 1
+  MemoryType              : Application
 
 SystemControlInfo:
   SaveDataSize: 0KB
