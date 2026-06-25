@@ -1,0 +1,103 @@
+name: Build Playz 3DS Browser
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches: [ "main" ]
+    tags: [ "v*" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch: {}
+
+jobs:
+  # ── Job 1: compile .3dsx inside the devkitPro ARM container ──────────────
+  build-3dsx:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkitarm:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build .3dsx
+        run: make -j$(nproc)
+
+      - name: Upload .3dsx + ELF (needed by CIA job)
+        uses: actions/upload-artifact@v4
+        with:
+          name: playz-3ds-browser-3dsx
+          path: |
+            *.3dsx
+            *.smdh
+            *.elf
+
+  # ── Job 2: package .cia on plain Ubuntu (bannertool/makerom from GitHub) ─
+  build-cia:
+    runs-on: ubuntu-latest
+    needs: build-3dsx
+
+    steps:
+      - name: Checkout (for Makefile + assets)
+        uses: actions/checkout@v4
+
+      - name: Download compiled ELF + SMDH
+        uses: actions/download-artifact@v4
+        with:
+          name: playz-3ds-browser-3dsx
+
+      - name: Install bannertool
+        run: |
+          ASSET=$(curl -s https://api.github.com/repos/Steveice10/bannertool/releases/latest \
+            | grep browser_download_url | grep linux | grep -v '.md5' | head -1 \
+            | cut -d'"' -f4)
+          echo "Downloading bannertool from: $ASSET"
+          curl -L "$ASSET" -o bannertool
+          chmod +x bannertool
+          sudo mv bannertool /usr/local/bin/
+
+      - name: Install makerom
+        run: |
+          ASSET=$(curl -s https://api.github.com/repos/3DSGuy/Project_CTR/releases/latest \
+            | grep browser_download_url | grep makerom | grep ubuntu | grep -v '.md5' | head -1 \
+            | cut -d'"' -f4)
+          echo "Downloading makerom from: $ASSET"
+          curl -L "$ASSET" -o makerom
+          chmod +x makerom
+          sudo mv makerom /usr/local/bin/
+
+      - name: Build .cia
+        run: make cia
+
+      - name: Upload .cia artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: playz-3ds-browser-cia
+          path: "*.cia"
+
+  # ── Job 3: attach both to a GitHub Release when a tag is pushed ──────────
+  release:
+    runs-on: ubuntu-latest
+    needs: [ build-3dsx, build-cia ]
+    if: startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - name: Download 3dsx artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: playz-3ds-browser-3dsx
+
+      - name: Download CIA artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: playz-3ds-browser-cia
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            *.3dsx
+            *.cia
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
