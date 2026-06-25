@@ -1,29 +1,23 @@
 BasicInfo:
-  Title                   : "Playz 3DS Browser"
-  ProductCode             : "CTR-P-BRWS"
-  Logo                    : Nintendo
+  Title        : "Playz 3DS Browser"
+  ProductCode  : "CTR-P-BRWS"
+  Logo         : Nintendo
 
 TitleInfo:
-  UniqueId                : 0xBC1FF
-  Category                : Application
+  UniqueId     : 0xBC1FF
+  Category     : Application
 
 Option:
-  UseOnSD                 : true
-  FreeProductCode         : true
-  MediaFootPadding        : false
-  EnableCrypt             : false
-  EnableCompress          : true
-
-AccessControlInfo:
-  CoreVersion             : 2
-  IdealProcessor          : 0
-  AffinityMask            : 1
-  MemoryType              : Application
+  UseOnSD      : true
+  FreeProductCode : true
+  MediaFootPadding : false
+  EnableCrypt  : false
+  EnableCompress : true
 
 SystemControlInfo:
-  SaveDataSize: 0KB
-  RemasterVersion: 0
-  StackSize: 0x40000
+  SaveDataSize : 0KB
+  RemasterVersion : 0
+  StackSize    : 0x40000
   ServiceAccessControl:
     - ac:u
     - fs:USER
@@ -40,4 +34,4 @@ SystemControlInfo:
     - news:s
     - http:C
   TextSection:
-    StartAddress: 0x00100000
+    StartAddress : 0x00100000
