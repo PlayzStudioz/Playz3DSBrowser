@@ -1,0 +1,82 @@
+BasicInfo:
+  Title                   : "Playz 3DS Browser"
+  ProductCode             : "CTR-P-BRWS"
+  Logo                    : Nintendo
+
+TitleInfo:
+  UniqueId                : 0xBC1FF
+  Category                : Application
+
+Option:
+  UseOnSD                 : true
+  FreeProductCode         : true
+  MediaFootPadding        : false
+  EnableCrypt             : false
+  EnableCompress          : true
+
+AccessControlInfo:
+  CoreVersion                      : 2
+  PriorityLevel                    : Low
+  IdealProcessor                   : 0
+  AffinityMask                     : 1
+
+  Old3DSSystemMode                 : Prod
+  New3DSSystemMode                 : Legacy
+  New3DSCpuSpeed                   : Legacy
+  EnableL2Cache                    : false
+
+  MemoryType                       : Application
+  SystemModeExt                    : Legacy
+
+  IoAccessControl:
+   - mcuhwc
+   - ptmsysm
+
+  FileSystemAccess:
+    - CategorySystemApplication
+    - CategoryHardwareCheck
+    - CategoryFileSystemTool
+    - Debug
+    - DirectSdmc
+    - Core
+    - CtrNandRo
+    - CtrNandRw
+    - CtrNandRoWrite
+    - CategorySystemSettings
+    - CardBoard
+    - ExportImportIvs
+    - DirectSdmcWrite
+    - SwitchCleanup
+    - SaveDataMove
+    - Shop
+    - Shell
+    - CategoryHomeMenu
+
+  Permission:
+    Category:
+     - Network
+     - SoftwareKeyboard
+     - Graphics
+     - HomeMenu
+
+SystemControlInfo:
+  SaveDataSize: 0KB # no extdata used
+  RemasterVersion: 0
+  StackSize: 0x40000
+  ServiceAccessControl:
+    - ac:u
+    - fs:USER
+    - gsp::Gpu
+    - hid:USER
+    - ndm:u
+    - nwm::UDS
+    - soc:U
+    - APT:U
+    - ptm:u
+    - cfg:u
+    - cecd:u
+    - frd:u
+    - news:s
+    - http:C
+  TextSection:
+    StartAddress: 0x00100000
