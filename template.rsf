@@ -16,7 +16,6 @@ Option:
 
 AccessControlInfo:
   CoreVersion                      : 2
-  PriorityLevel                    : Low
   IdealProcessor                   : 0
   AffinityMask                     : 1
 
